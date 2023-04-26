@@ -12,6 +12,7 @@ import "./persistencia/dbConfig.js";
 import autRouter from "./routes/auth.route.js";
 import productsRouter from "./routes/products.route.js";
 import cartsRouter from "./routes/cart.route.js";
+import viewsRouter from "./routes/views.route.js";
 
 const app = express();
 
@@ -32,16 +33,20 @@ app.use(cookieParser());
 //   })
 // );
 
-app.use(express.static(path.join(__dirname, "/public")));
-
-app.use("/api/auth", autRouter);
-app.use("/api/products", productsRouter);
-app.use("/api/cart", cartsRouter);
-
 //motores de plantilla
 app.engine("handlebars", handlebars.engine());
 app.set("view engine", "handlebars");
 app.set("views", __dirname + "/views");
+
+app.use(express.static(path.join(__dirname, "/public")));
+
+//API
+app.use("/api/auth", autRouter);
+app.use("/api/products", productsRouter);
+app.use("/api/cart", cartsRouter);
+
+//VIEWS
+app.use("/", viewsRouter);
 
 const PORT = config.PORT;
 

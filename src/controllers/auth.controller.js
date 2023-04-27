@@ -14,7 +14,6 @@ export const registerController = async (req, res) => {
   try {
     const user = req.body;
     const newUser = await register(user);
-    console.log(newUser);
     res.status(200).json(newUser);
   } catch (error) {
     res.status(500).json({ error: error.message });

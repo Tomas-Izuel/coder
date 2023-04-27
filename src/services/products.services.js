@@ -1,8 +1,10 @@
 import productsDao from "../persistencia/DAOs/products.dao.js";
+import { productUIDto } from "../DTOs/products.dto.js";
 
 export const getProducts = async () => {
   try {
-    return productsDao.findAll();
+    const products = await productsDao.findAll();
+    return productUIDto(products);
   } catch (error) {
     throw error;
   }

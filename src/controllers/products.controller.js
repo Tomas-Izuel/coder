@@ -55,3 +55,12 @@ export const deleteProductController = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+export const renderProducts = async (req, res) => {
+  try {
+    const products = await getProducts();
+    res.render("home", { products: products });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};

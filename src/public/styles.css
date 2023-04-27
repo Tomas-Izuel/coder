@@ -1,0 +1,77 @@
+.navGeneral {
+    position: fixed;
+    width: 100vw;
+    z-index: 10;
+}
+
+.navbar {
+    width: 100%;
+    padding: 1rem 2rem;
+}
+
+.navbar-nav {
+    width: 100%;
+}
+
+.form-inline {
+    display: flex;
+    background-color: white;
+}
+
+
+.mainLogin {
+    padding: 5rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.formBox {
+    display: flex;
+    width: 50rem;
+    border-radius: 1rem;
+    box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.219);
+    overflow: hidden;
+}
+
+.formLogin {
+    width: 30rem;
+    padding: 2rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.btnLogin {
+    width: 100%;
+    border-radius: 0.1rem 0.1rem 0.8rem 0.8rem;
+}
+
+.imgLogin {
+    width: 20rem;
+    object-fit: cover;
+}
+
+.contentMain {
+    padding: 6rem;
+}
+
+.errorMessage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.productGallery {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+}

@@ -7,6 +7,7 @@ export const jwtValidator = (req, res, next) => {
     if (verifiedUser) {
       req.user = verifiedUser.user;
       res.cookie("user", verifiedUser);
+      res.locals.user = verifiedUser;
       next();
     } else {
       res.render("error", { error: "No estas autorizado" });

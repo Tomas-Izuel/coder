@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import mongoosePaginate from "mongoose-paginate-v2";
 
 const productsSchema = new mongoose.Schema({
-  title: {
+  name: {
     type: String,
     required: true,
   },
@@ -14,7 +14,7 @@ const productsSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  thumbnails: {
+  image: {
     type: String,
   },
   code: {

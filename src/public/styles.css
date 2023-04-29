@@ -75,3 +75,11 @@
     flex-wrap: wrap;
     gap: 2rem;
 }
+
+.cardContent {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: space-between;
+    flex-direction: column;
+}

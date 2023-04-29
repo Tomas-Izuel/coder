@@ -5,13 +5,28 @@
       <h3>Seccion de productos</h3>
       <div class="productGallery">
         {{#each products}}
-          <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src={{image}} alt="Card image cap" />
-            <div class="card-body">
-              <h5 class="card-title">{{description}}</h5>
-              <p class="card-text">Some quick example text to build on the card
-                title and make up the bulk of the card's content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
+          <div class="card" style="width: 18rem; height: 28rem;">
+            <img
+              class="card-img-top"
+              src={{this.thumbnail}}
+              alt="Card image cap"
+            />
+            <div class="cardContent">
+              <div class="card-body">
+                <h4 class="card-title">{{this.title}}</h4>
+                <p class="card-text">{{this.description}}</p>
+              </div>
+              <div
+                id={{this.id}}
+                style="display: flex; justify-content: space-between; align-items:center; padding: 1rem"
+              >
+                <h5>${{this.price}}</h5>
+                <button
+                  id={{this.id}}
+                  class="btn btn-warning"
+                  onclick="addToCart(this.id)"
+                >Agregar al carrito</button>
+              </div>
             </div>
           </div>
         {{/each}}
@@ -21,3 +36,4 @@
     {{/if}}
   </section>
 </main>
+<script src="/scripts/home.js"></script>

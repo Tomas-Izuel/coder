@@ -3,7 +3,7 @@ import { productUIDto } from "../DTOs/products.dto.js";
 
 export const getProducts = async () => {
   try {
-    const products = await productsDao.findAll();
+    const products = await productsDao.getProductsWithStock();
     return productUIDto(products);
   } catch (error) {
     throw error;

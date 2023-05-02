@@ -14,3 +14,8 @@ export const getUserByUsername = async (username) => {
   const user = await usersDao.getByUsername(username);
   return user;
 };
+
+export const editUser = async (id, user) => {
+  const editedUser = await usersDao.update(id, user);
+  return editedUser;
+}

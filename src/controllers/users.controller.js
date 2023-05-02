@@ -1,24 +1,31 @@
-import { addProduct } from "../services/cart.services";
-import { createCart } from "../services/cart.services";
-import { editUser } from "../services/users.services";
-import jwt from "jsonwebtoken";
+import {
+    createUserService,
+    loginUserService,
+    getUsersDataService
+} from '../services/users.services.js'
 
-export const addProductToUserCartController = async (req, res) => {
-  const user = req.cookies.user;
-  if (!user.cartId) {
+
+  export const logoutController = (req, res) => {
+    req.session.destroy((error) => {
+      if (error) {
+        console.log(error)
+        res.json({ message: error })
+      } else {
+        res.redirect('/api/views/login')
+      }
+    })
+  }
+
+  export const getUsersDataController = async (req,res) => {
     try {
-      const cartId = await createCart()
-      user.cartId = cartId;
-      const editedUser = await editUser(user.id, user);
+      const user = req.user
+      console.log('mail de usuario',user.email)
+      //const userData = await getUsersDataService(user)
+      res.json({usersMail: user.email, userFullname: user.full_name})
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      console.log('error')
     }
   }
-  try {
-    const product = req.body;
-    const updatedCart = await addProduct(id, product);
-    res.status(200).json(updatedCart);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
+
+  
+

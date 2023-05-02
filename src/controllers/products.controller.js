@@ -1,66 +1,92 @@
 import {
-  createProduct,
-  getProducts,
-  getProductById,
-  updateProduct,
-  deleteProduct,
+  getProductsService,
+  getProductByIdService,
+  addProductService,
+  deleteProductService,
+  updateProductService,
+  mockedProductsService,
 } from "../services/products.services.js";
+import CustomError from "../utils/errors/CustomError.js";
+import {
+  ErrorsCause,
+  ErrorsMessage,
+  ErrorsName,
+} from "../utils/errors/errorsEnum.js";
 
 export const getProductsController = async (req, res) => {
+  const { limit = 10, page = 1, sort, category } = req.query;
+  if (typeof limit !== "number" || typeof page !== "number") {
+    CustomError.createCustomError({
+      name: ErrorsName.PRODUCT_DATA_INCORRECT_TYPE,
+      cause: ErrorsCause.PRODUCT_DATA_INCORRECT_TYPE,
+      message: ErrorsMessage.PRODUCT_DATA_INCORRECT_TYPE,
+    });
+  }
+
   try {
-    const products = await getProducts();
-    res.status(200).json(products);
+    let userName = req.user.first_name;
+    let user = req.user;
+    let products = await getProductsService(limit, page, sort, category, user); //category en la url va sin comillas
+
+    res.json({ response: products }); //esta se usará con el front de React
+    //res.render("products", { products, userName });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.log("Error desde el controller: ", error);
   }
 };
 
 export const getProductByIdController = async (req, res) => {
   try {
-    const { id } = req.params;
-    const product = await getProductById(id);
-    res.status(200).json(product);
+    let id = req.params.pid;
+    const product = await getProductByIdService(id);
+    res.json({ response: product });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.log("Error desde el controller", error);
+    return error;
   }
 };
 
-export const createProductController = async (req, res) => {
+export const addProductController = async (req, res) => {
   try {
-    const product = req.body;
-    const newProduct = await createProduct(product);
-    res.status(200).json(newProduct);
+    let newProduct = req.body;
+    const newProductCreated = await addProductService(newProduct);
+    res.json({ response: newProductCreated });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.log("Error desde el controller: ", error);
   }
 };
 
 export const updateProductController = async (req, res) => {
   try {
-    const { id } = req.params;
-    const product = req.body;
-    const updatedProduct = await updateProduct(id, product);
-    res.status(200).json(updatedProduct);
+    const pid = req.params.pid;
+    const newProduct = req.body;
+    const updatedProduct = await updateProductService(pid, newProduct);
+    res.json({
+      reponse: updatedProduct,
+    });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.log("Error desde el controller: ", error);
   }
 };
 
 export const deleteProductController = async (req, res) => {
   try {
-    const { id } = req.params;
-    const deletedProduct = await deleteProduct(id);
-    res.status(200).json(deletedProduct);
+    const pid = req.params.pid;
+    const deletedProduct = await deleteProductService(pid);
+    res.json({
+      response: deletedProduct,
+    });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.log("Error desde el controller: ", error);
   }
 };
 
-export const renderProducts = async (req, res) => {
+export const mockedProductsController = async (req, res) => {
+
   try {
-    const products = await getProducts();
-    res.render("home", { products });
+    const products = await mockedProductsService();
+    res.json({ response: products });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.log("Error desde el controller: ", error);
   }
 };

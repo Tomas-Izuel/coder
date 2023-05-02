@@ -1,43 +1,38 @@
-import productsDao from "../persistencia/DAOs/products.dao.js";
-import { productUIDto } from "../DTOs/products.dto.js";
+import {
+    getProducts, 
+    getProductById, 
+    addProduct, 
+    deleteProduct, 
+    updateProduct,
+    mockedProducts
+} from '../persistencia/productsPersistence.js'
 
-export const getProducts = async () => {
-  try {
-    const products = await productsDao.getProductsWithStock();
-    return productUIDto(products);
-  } catch (error) {
-    throw error;
-  }
-};
+export async function getProductsService(limit, page, sort, category, user){
+    const products = await getProducts(limit, page, sort, category, user)
+    return products
+}
 
-export const getProductById = async (id) => {
-  try {
-    return productsDao.findById(id);
-  } catch (error) {
-    throw error;
-  }
-};
+export async function getProductByIdService(id){
+    const product = await getProductById(id)
+    return product
+}
 
-export const createProduct = async (product) => {
-  try {
-    return productsDao.create(product);
-  } catch (error) {
-    throw error;
-  }
-};
+export async function addProductService(product){
+    const newProduct = await addProduct(product)
+    return newProduct
+}
 
-export const updateProduct = async (id, product) => {
-  try {
-    return productsDao.update(id, product);
-  } catch (error) {
-    throw error;
-  }
-};
+export async function deleteProductService(id){
+    const deletedProduct = await deleteProduct(id)
+    return deletedProduct
+}
 
-export const deleteProduct = async (id) => {
-  try {
-    return productsDao.deleteById(id);
-  } catch (error) {
-    throw error;
-  }
-};
+export async function updateProductService(id, newProduct){
+    const editedProduct = await updateProduct(id, newProduct)
+    return editedProduct
+}
+
+export async function mockedProductsService(){
+    const products = await mockedProducts()
+    return products
+}

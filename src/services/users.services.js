@@ -1,21 +1,24 @@
-import usersDao from "../persistencia/DAOs/users.dao.js";
+import {
+    createUser,
+    loginUser,
+   // getUsersData
+} from '../persistencia/usersPersistence.js'
+import UsersRepository from '../persistencia/repositories/users.repositories.js'
 
-export const getUsers = async () => {
-  const users = await usersDao.getAll();
-  return users;
-};
 
-export const getUserById = async (id) => {
-  const user = await usersDao.getById(id);
-  return user;
-};
+export async function createUserService(user){
+    const newUser = await createUser(user)
+    return newUser
+}
 
-export const getUserByUsername = async (username) => {
-  const user = await usersDao.getByUsername(username);
-  return user;
-};
+export async function loginUserService(user){
+    const newUser = await loginUser(user)
+    return newUser
+}
 
-export const editUser = async (id, user) => {
-  const editedUser = await usersDao.update(id, user);
-  return editedUser;
+export async function getUsersDataService(userFromSession){
+ //   const userFromDTO = new UsersRepository(user)
+//acá da la vuelta, poner DTO
+    //const usersData = await getUsersData(userFromSession)
+    return userFromSession
 }

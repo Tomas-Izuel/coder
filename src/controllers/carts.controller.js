@@ -1,68 +1,113 @@
 import {
-  addProduct,
-  emptyCart,
-  getCart,
-  getCarts,
-  deleteCart,
-  createCart,
-} from "../services/cart.services.js";
+  addCartService,
+  getCartsService,
+  getCartByIdService,
+  addProductToCartService,
+  deleteProductFromCartService,
+  emptyCartService,
+  editProductQtyService,
+  editCartService,
+  completeSaleService,
+} from "../services/carts.services.js";
 
-export const getCartController = async (req, res) => {
+export const addCartController = async (req, res) => {
   try {
-    const { id } = req.params;
-    const cart = await getCart(id);
-    res.status(200).json(cart);
+    const cart = req.body;
+    const addedCart = await addCartService(cart);
+    res.json({ message: addedCart });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.log("Error desde el controller: ", error);
   }
 };
 
 export const getCartsController = async (req, res) => {
   try {
-    const carts = await getCarts();
-    res.status(200).json(carts);
+    const carts = await getCartsService();
+    res.json({ message: carts });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.log("Error desde el controller: ", error);
   }
 };
 
-export const addProductController = async (req, res) => {
+export const getCartByIdController = async (req, res) => {
   try {
-    const { id } = req.params;
-    const product = req.body;
-    const updatedCart = await addProduct(id, product);
-    res.status(200).json(updatedCart);
+    const cid = req.params.cid;
+    const cartFoundById = await getCartByIdService(cid);
+
+    res.json({ message: cartFoundById });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.log("Error desde el controller: ", error);
+  }
+};
+
+export const addProductToCartController = async (req, res) => {
+  try {
+    const cid = req.params.cid;
+    const pid = req.params.pid;
+    const addedProduct = await addProductToCartService(cid, pid);
+    res.json({
+      message: addedProduct,
+    });
+  } catch (error) {
+    console.log("Error desde el controller: ", error);
+  }
+};
+
+export const deleteProductFromCartController = async (req, res) => {
+  try {
+    const cid = req.params.cid;
+    const pid = req.params.pid;
+    const deletedProduct = await deleteProductFromCartService(cid, pid);
+    res.json({
+      message: deletedProduct,
+    });
+  } catch (error) {
+    console.log("Error desde el controller: ", error);
   }
 };
 
 export const emptyCartController = async (req, res) => {
   try {
-    const { id } = req.params;
-    const updatedCart = await emptyCart(id);
-    res.status(200).json(updatedCart);
+    const cid = req.params.cid;
+    const emptyCart = await emptyCartService(cid);
+    res.json({ message: emptyCart });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.log("Error desde el controller: ", error);
   }
 };
 
-export const deleteCartController = async (req, res) => {
+export const editProductQtyController = async (req, res) => {
   try {
-    const { id } = req.params;
-    const deletedCart = await deleteCart(id);
-    res.status(200).json(deletedCart);
+    const cid = req.params.cid;
+    const pid = req.params.pid;
+    const quantity = parseInt(req.params.qty);
+    const editedProductQty = await editProductQtyService(cid, pid, quantity);
+    res.json({ message: editedProductQty });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.log("Error desde el controller: ", error);
   }
 };
 
-export const createCartController = async (req, res) => {
+export const editCartController = async (req, res) => {
   try {
-    const cart = req.body;
-    const newCart = await createCart(cart);
-    res.status(200).json(newCart);
+    const cid = req.params.cid;
+    const newCart = req.body.cart;
+    const editedCart = await editCartService(cid, newCart);
+    res.json({ message: editedCart });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.log("Error desde el controller: ", error);
+  }
+};
+
+export const completeSaleController = async (req, res) => {
+  try {
+    const buyer = req.user;
+    const cid = req.params.cid;
+    const resultCart = await completeSaleService(cid, buyer.full_name);
+    // algo.ticket = {...algo.ticket, purchaser: req.cookies.user.user.email}
+
+    res.json({ message: resultCart });
+  } catch (error) {
+    console.log("Error desde el controller: ", error);
   }
 };

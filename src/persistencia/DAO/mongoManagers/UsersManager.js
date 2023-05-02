@@ -13,7 +13,6 @@ import {
 
 export default class UsersManager {
   async createUser(user) {
-    //esta ruta ya no está en uso porque se usa la estrategia de passport??
     if (!user) {
       CustomError.createCustomError({
         name: ErrorsName.PRODUCT_DATA_INCOMPLETE,
@@ -68,13 +67,7 @@ export default class UsersManager {
         return usuario;
       }
     } else {
-      //si no coinciden las contraseñas o si no encuentra el usuario:
       return null;
     }
   }
-
-  // async getUsersData (user) {
-  //   const usersData = await userModel.find({email: user.email})
-  //   return usersData
-  // }
 }

@@ -68,7 +68,6 @@ passport.use(
         const user = await userModel.findOne({ email });
 
         if (user) {
-         
           const isPassword = await comparePasswords(password, user.password);
 
           if (isPassword) {
@@ -99,9 +98,9 @@ passport.use(
   "github",
   new GithubStrategy(
     {
-      clientID: "Iv1.672fec06309dff3d",
-      clientSecret: "3ba2e70390df01fa7eb49cef3fbbe434b07ffefc",
-      callbackURL: "http://localhost:8080/api/users/github",
+      clientID: "Iv1.a5dfd21177715632",
+      clientSecret: "9b1116124d25a7995eeab0965c28ab4d576a161c",
+      callbackURL: "http://localhost:8080/auth/github",
     },
     async (accessToken, refreshToken, profile, done) => {
       const user = await userModel.findOne({ email: profile._json.email });
@@ -133,9 +132,3 @@ passport.deserializeUser(async (id, done) => {
   const user = await userModel.findById(id);
   done(null, user);
 });
-
-/*
-App ID: 305163
-Client Secret: 16007547c83e7a643e09298a9c201c00df61f7a1
-Client ID: Iv1.ba8d845bcb2956e3
-*/

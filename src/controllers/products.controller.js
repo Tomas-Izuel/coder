@@ -26,10 +26,9 @@ export const getProductsController = async (req, res) => {
   try {
     let userName = req.user.first_name;
     let user = req.user;
-    let products = await getProductsService(limit, page, sort, category, user); //category en la url va sin comillas
+    let products = await getProductsService(limit, page, sort, category, user);
 
-    res.json({ response: products }); //esta se usará con el front de React
-    //res.render("products", { products, userName });
+    res.json({ response: products });
   } catch (error) {
     console.log("Error desde el controller: ", error);
   }
@@ -82,7 +81,6 @@ export const deleteProductController = async (req, res) => {
 };
 
 export const mockedProductsController = async (req, res) => {
-
   try {
     const products = await mockedProductsService();
     res.json({ response: products });

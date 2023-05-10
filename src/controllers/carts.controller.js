@@ -104,7 +104,6 @@ export const completeSaleController = async (req, res) => {
     const buyer = req.user;
     const cid = req.params.cid;
     const resultCart = await completeSaleService(cid, buyer.full_name);
-    // algo.ticket = {...algo.ticket, purchaser: req.cookies.user.user.email}
 
     res.json({ message: resultCart });
   } catch (error) {
